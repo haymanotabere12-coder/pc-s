@@ -1,0 +1,168 @@
+====================================
+ PAYMENT SYSTEM SETUP INSTRUCTIONS
+====================================
+
+FEATURES ADDED:
+---------------
+✓ Ethiopian Bank Payment Methods
+✓ Payment Screenshot Upload
+✓ Admin Payment Approval/Rejection
+✓ Admin Message to User with Reason
+✓ User Payment Status Tracking
+
+STEP-BY-STEP SETUP:
+--------------------
+
+STEP 1: Run Database Migration
+-------------------------------
+1. Open phpMyAdmin: http://localhost/phpmyadmin
+2. Select database: pc_store
+3. Click "SQL" tab
+4. Open file: c:\xampp me\htdocs\pc-store\payment_system_migration.sql
+5. Copy ALL the content
+6. Paste into SQL box
+7. Click "Go"
+
+This will:
+- Add payment columns to orders table
+- Create banks table
+- Insert 8 Ethiopian banks
+- Create payment_messages table
+
+
+STEP 2: Configure Bank Accounts (Optional)
+-------------------------------------------
+You can update the bank account numbers in phpMyAdmin:
+
+1. Go to phpMyAdmin
+2. Select "pc_store" database
+3. Click on "banks" table
+4. Click "Browse" to see all banks
+5. Click "Edit" on any bank to update:
+   - Account Number
+   - Account Name
+   - Bank Name
+
+Current Ethiopian Banks Added:
+- Commercial Bank of Ethiopia (CBE)
+- Dashen Bank
+- Bank of Abyssinia
+- Awash Bank
+- Wegagen Bank
+- United Bank
+- Nib International Bank
+- Cooperative Bank of Oromia
+
+
+STEP 3: Test the Payment System
+--------------------------------
+
+AS A USER:
+1. Login as regular user
+2. Add products to cart
+3. Go to checkout
+4. Fill in shipping info
+5. Select a bank (e.g., Commercial Bank of Ethiopia)
+6. See bank account details
+7. Upload payment screenshot
+8. Place order
+
+AS AN ADMIN:
+1. Login as admin (admin / 123456)
+2. Go to: http://localhost/pc-store/admin/orders.php
+3. Filter by "Payment: Proof Uploaded"
+4. Click "View Proof" to see screenshot
+5. Add message/reason (optional)
+6. Click "Approve" or "Reject"
+
+
+HOW IT WORKS:
+-------------
+
+USER FLOW:
+1. User adds items to cart
+2. User goes to checkout
+3. User selects Ethiopian bank
+4. System shows bank account details
+5. User transfers money to bank account
+6. User uploads payment screenshot
+7. Order created with status: "proof_uploaded"
+8. User sees "Awaiting Approval" in orders page
+
+ADMIN FLOW:
+1. Admin sees order with "Proof Uploaded"
+2. Admin clicks "View Proof" to see screenshot
+3. Admin verifies payment in bank account
+4. Admin can add message (reason for approval/rejection)
+5. Admin clicks "Approve" or "Reject"
+6. If approved: order status changes to "processing"
+7. If rejected: user sees admin message and reason
+
+USER SEES:
+- Payment status badge on orders page
+- Admin message if payment is approved/rejected
+- Clear indication if payment was rejected
+
+
+PAYMENT STATUSES:
+-----------------
+1. pending - Order created, no payment yet
+2. proof_uploaded - User uploaded payment screenshot
+3. approved - Admin verified and approved payment
+4. rejected - Admin rejected payment (with reason)
+
+
+FILE CHANGES:
+-------------
+✓ checkout.php - Added bank selection & screenshot upload
+✓ orders.php (user) - Shows payment status & admin messages
+✓ admin/orders.php - Payment approval system
+✓ payment_system_migration.sql - Database updates
+
+
+UPLOADS FOLDER:
+---------------
+Payment screenshots are saved to: c:\xampp me\htdocs\pc-store\uploads\
+File naming: payment_TIMESTAMP_RANDOMNUMBER.ext
+
+
+BENEFITS:
+---------
+✓ Secure payment verification
+✓ Clear communication between admin and user
+✓ Payment proof tracking
+✓ Support for major Ethiopian banks
+✓ Easy approval workflow
+✓ Rejection with reason
+
+
+TROUBLESHOOTING:
+----------------
+
+If banks don't show on checkout:
+- Run the payment_system_migration.sql file
+- Check if banks table exists in phpMyAdmin
+
+If upload fails:
+- Check uploads folder permissions
+- Make sure file is JPG, PNG, or GIF
+- Check file size (should be under 5MB)
+
+If admin can't see payment proof:
+- Check if payment_proof column exists in orders table
+- Verify file exists in uploads folder
+
+
+ADMIN URLS:
+-----------
+- Orders Management: http://localhost/pc-store/admin/orders.php
+- Filter by Payment: http://localhost/pc-store/admin/orders.php?payment=proof_uploaded
+
+
+USER URLS:
+----------
+- Checkout: http://localhost/pc-store/checkout.php
+- My Orders: http://localhost/pc-store/orders.php
+
+
+====================================

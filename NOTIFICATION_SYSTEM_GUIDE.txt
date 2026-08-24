@@ -1,0 +1,226 @@
+====================================
+ NOTIFICATION ALERT SYSTEM - GUIDE
+====================================
+
+FEATURE ADDED:
+--------------
+✓ Bell icon alert when admin sends message
+✓ Notification badge on "My Orders" menu
+✓ Animated alert banner on orders page
+✓ "NEW" badge on unread messages
+✓ Auto-mark as read when user views
+✓ Pulsing animation on new messages
+
+
+HOW IT WORKS:
+-------------
+
+WHEN ADMIN SENDS MESSAGE:
+1. Admin approves/rejects payment
+2. Admin writes message (reason)
+3. System saves message
+4. System sets payment_message_seen = 0 (unread)
+5. User gets notification alerts
+
+
+WHAT USER SEES:
+
+📍 In Header/Navigation:
+- Red badge with bell icon on "My Orders" link
+- Shows count of unread messages
+- Example: "🔔 2"
+
+📍 On Orders Page:
+- Large animated banner at top
+- Orange gradient background
+- Ringing bell icon animation
+- Shows: "New Message from Admin!"
+- Can close banner with X button
+
+📍 On Specific Order:
+- "NEW" red badge next to admin message
+- Yellow background (unread) vs Blue (read)
+- Pulsing animation on unread messages
+- Message turns blue after viewing
+
+
+AFTER USER VIEWS:
+1. User clicks "My Orders" in menu
+2. Page loads with alert banner
+3. System automatically marks all as read
+4. Badge disappears from header
+5. "NEW" badges disappear
+6. Message background changes to blue
+
+
+STEP TO ENABLE:
+---------------
+
+IF YOU ALREADY RAN payment_system_migration.sql:
+-------------------------------------------------
+Run this additional SQL:
+
+1. Open: http://localhost/phpmyadmin
+2. Select: pc_store database
+3. Click: SQL tab
+4. Open file: add_notification_column.sql
+5. Copy content and paste
+6. Click: Go
+
+OR manually run:
+```sql
+ALTER TABLE orders 
+ADD COLUMN IF NOT EXISTS payment_message_seen TINYINT(1) DEFAULT 0 AFTER admin_response;
+```
+
+
+IF YOU HAVEN'T RUN ANY MIGRATION:
+----------------------------------
+Just run: payment_system_migration.sql
+(It already includes the notification column)
+
+
+VISUAL INDICATORS:
+------------------
+
+UNREAD MESSAGE:
+- Header: Red badge with count (🔔 2)
+- Banner: Orange gradient with ringing bell
+- Order card: Yellow background + "NEW" badge + pulse animation
+
+READ MESSAGE:
+- Header: No badge
+- Banner: No banner
+- Order card: Blue background, no badge, no animation
+
+
+ADMIN WORKFLOW:
+---------------
+
+1. Admin goes to: /admin/orders.php
+2. Filter: Payment → Proof Uploaded
+3. Views payment proof
+4. Writes message in text area
+5. Clicks: Approve or Reject
+6. System shows: "User will be notified"
+7. payment_message_seen = 0 (unread)
+
+
+USER WORKFLOW:
+--------------
+
+1. User logs in
+2. Sees badge on "My Orders" (e.g., 🔔 1)
+3. Clicks "My Orders"
+4. Sees animated banner: "New Message from Admin!"
+5. Scrolls down to order
+6. Sees message with "NEW" badge
+7. Reads message
+8. Next visit: All badges gone (marked as read)
+
+
+BENEFITS:
+---------
+✓ User immediately knows admin responded
+✓ Multiple notification points (header, banner, order)
+✓ Clear visual distinction between read/unread
+✓ Auto-marks as read (no manual action needed)
+✓ Professional animations
+✓ Can dismiss banner
+
+
+ANIMATIONS:
+-----------
+1. slideDown - Banner appears from top
+2. ring - Bell icon rings like real bell
+3. pulse - Unread message pulses gently
+
+
+FILES MODIFIED:
+---------------
+✓ payment_system_migration.sql - Added payment_message_seen column
+✓ add_notification_column.sql - Migration for existing setups
+✓ admin/orders.php - Sets payment_message_seen = 0 on new message
+✓ includes/header.php - Shows notification badge count
+✓ orders.php - Banner alert + marks as read + visual indicators
+
+
+DATABASE COLUMN:
+----------------
+Column: payment_message_seen
+Type: TINYINT(1)
+Default: 0 (unread)
+When 1: Message has been seen by user
+
+
+TESTING THE SYSTEM:
+-------------------
+
+STEP 1: As Admin
+1. Login as admin
+2. Go to orders
+3. Find order with payment proof
+4. Approve with message: "Payment verified, processing order"
+5. Logout
+
+STEP 2: As User
+1. Login as user
+2. Check header - should see badge on "My Orders"
+3. Click "My Orders"
+4. See animated banner
+5. See "NEW" badge on order message
+6. Read message
+7. Refresh page - badges should be gone
+
+
+TROUBLESHOOTING:
+----------------
+
+Badge not showing:
+- Check if payment_message_seen column exists
+- Verify admin_response has content
+- Check if user is logged in
+
+Banner not animating:
+- Check browser supports CSS animations
+- Verify CSS is loaded
+
+Message not marking as read:
+- Check if orders.php is loading correctly
+- Verify database update query runs
+
+
+SQL QUERIES:
+------------
+
+Check unread messages:
+```sql
+SELECT id, admin_response, payment_message_seen 
+FROM orders 
+WHERE user_id = 1 
+AND payment_message_seen = 0 
+AND admin_response IS NOT NULL;
+```
+
+Mark all as read:
+```sql
+UPDATE orders 
+SET payment_message_seen = 1 
+WHERE user_id = 1 
+AND admin_response IS NOT NULL;
+```
+
+
+NOTIFICATION COUNT QUERY:
+-------------------------
+```sql
+SELECT COUNT(*) 
+FROM orders 
+WHERE user_id = ? 
+AND payment_message_seen = 0 
+AND admin_response IS NOT NULL 
+AND admin_response != ''
+```
+
+
+====================================

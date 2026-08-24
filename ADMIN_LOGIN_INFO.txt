@@ -1,0 +1,78 @@
+====================================
+   PC STORE - ADMIN PANEL FIX
+====================================
+
+WHAT WAS FIXED:
+---------------
+1. ✓ Login system now auto-fixes admin password
+2. ✓ Login works with both hashed AND plain text passwords
+3. ✓ Admin panel files recreated (dashboard, sidebar, etc.)
+4. ✓ Password automatically hashed on first login
+
+HOW TO LOGIN AS ADMIN:
+----------------------
+1. Go to: http://localhost/pc-store/login.php
+
+2. Enter credentials:
+   Username: admin
+   Password: 123456
+
+3. Click Login
+
+4. You will be redirected to Admin Dashboard
+
+ADMIN PANEL URLS:
+-----------------
+- Dashboard:      http://localhost/pc-store/admin/dashboard.php
+- Products:       http://localhost/pc-store/admin/products.php
+- Orders:         http://localhost/pc-store/admin/orders.php
+- Users:          http://localhost/pc-store/admin/users.php
+- Categories:     http://localhost/pc-store/admin/categories.php
+- Messages:       http://localhost/pc-store/admin/messages.php
+
+ADMIN CREDENTIALS:
+------------------
+Username: admin
+Password: 123456
+Email: admin@pcstore.com
+
+TROUBLESHOOTING:
+----------------
+If login still doesn't work:
+
+1. Make sure XAMPP is running (Apache + MySQL)
+
+2. Check database exists:
+   - Open: http://localhost/phpmyadmin
+   - Look for "pc_store" database
+   - If not there, import: database.sql
+
+3. Reset admin password manually:
+   - Open phpMyAdmin
+   - Select "pc_store" database
+   - Click "SQL" tab
+   - Run this command:
+   
+     UPDATE users SET password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' WHERE username = 'admin';
+   
+   - Click "Go"
+   - Try login again
+
+FEATURES OF ADMIN PANEL:
+-------------------------
+✓ View dashboard statistics
+✓ Manage products (add, edit, delete)
+✓ Manage orders (update status)
+✓ Manage users
+✓ Manage categories
+✓ View contact messages
+✓ Send messages to customers about orders
+
+IMPORTANT NOTES:
+----------------
+- The login system now automatically fixes the admin password on first login
+- If the password is plain text, it will be re-hashed automatically
+- All admin pages require admin role to access
+- Non-admin users will be redirected to home page
+
+====================================
