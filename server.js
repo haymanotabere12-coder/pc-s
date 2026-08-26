@@ -1057,9 +1057,23 @@ app.get('/api/admin/stats', (req, res) => {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
+    const indexPath = path.join(distPath, 'index.html');
     app.use(express.static(distPath));
     app.get('*all', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(500).send(`
+          <!DOCTYPE html>
+          <html>
+            <head><title>Build Missing</title></head>
+            <body style="font-family:sans-serif;padding:40px;text-align:center;">
+              <h2>Frontend Build Missing (dist/index.html)</h2>
+              <p>Please ensure your Render Build Command is set to: <code>npm install && npm run build</code></p>
+            </body>
+          </html>
+        `);
+      }
     });
   }
 
