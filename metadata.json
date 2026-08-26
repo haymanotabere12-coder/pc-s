@@ -1,0 +1,6 @@
+{
+  "name": "PC Store",
+  "description": "PC Store e-commerce web platform for computers, gaming rigs, components, laptops and accessories with shopping cart, checkout, order tracking, user profiles, and admin panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

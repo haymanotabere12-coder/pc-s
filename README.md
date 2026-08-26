@@ -1,117 +1,71 @@
-# PC Store - Full-Stack Web Application
+# PC Store - Modern Hardware & Gaming Tech Hub
 
-A complete PC Store e-commerce web application built with HTML, CSS, JavaScript, and PHP.
+A full-stack e-commerce web application tailored for computer hardware, custom gaming rigs, workstations, and peripherals with Ethiopian Birr (ETB) currency and localized CBE / Telebirr payment receipt processing.
 
-## Features
+---
 
-- **User Authentication** - Login, Register, Logout with secure password hashing
-- **Product Catalog** - Browse products by category, search, pagination
-- **Product Details** - Detailed product pages with images and descriptions
-- **Shopping Cart** - Add, update, remove items, cart summary
-- **Checkout** - Complete order with shipping details
-- **User Profile** - Edit profile, change password
-- **Order History** - View past orders and their status
-- **Contact Page** - Send messages to store administrators
-- **Admin Panel**:
-  - Dashboard with stats (users, products, orders, revenue)
-  - Product management (CRUD)
-  - Order management with status updates
-  - Category management
-  - User management
-  - Contact message management
+## Key Features
 
-## Requirements
+### 🛒 E-Commerce & Shopping Experience
+- **Hardware Catalog**: Filter by category (Laptops, Gaming Desktops, GPUs, Processors, Monitors, Accessories), live keyword search, price range filters, and stock indicators.
+- **Product Details & Quick View**: High-resolution hardware previews, detailed technical specifications, instant stock status, and add-to-cart controls.
+- **Cart & Discount Codes**: Real-time quantity adjustment, subtotal calculation, automated Ethiopian tax calculation, and free shipping over 15,000 ETB.
+- **Ethiopian Payment Options**: Support for Commercial Bank of Ethiopia (CBE) and Telebirr direct bank transfers with receipt screenshot upload and verification.
 
-- PHP 7.4 or higher
-- MySQL 5.7 or higher
-- Web server (Apache/Nginx) or PHP built-in server
+### 🔐 User & Admin Authentication
+- **Unified Sign-In**: Single login portal for both customers and administrators with session persistence.
+- **Customer Registration**: Quick registration with full name, username, email, and phone number.
+- **Password Reset**: Self-service reset link generation.
+- **Admin Security Controls**: Dedicated admin credential management to update username, full name, avatar, and password with verification.
 
-## Installation
+### 📦 Order Tracking & Two-Way Live Chat
+- **Order History & Timeline**: Real-time tracking through 4 stages: Pending Approval, Processing, Shipped, and Delivered.
+- **Customer-to-Admin Order Chat**: Direct communication channel for order inquiries, payment clarifications, and status updates.
+- **Live Notifications**: Header notification bell with badge counters and one-click alert dismissals.
 
-### 1. Clone or download the project
+### 🛠️ Admin Management Dashboard
+- **Analytics & Revenue**: Total sales (ETB), active customer count, pending orders, and low-stock alerts.
+- **Product CRUD**: Add, edit, update inventory, upload images, and delete hardware items.
+- **Payment Verification**: Review customer payment screenshots and approve or reject receipts with 1-click.
+- **Customer Inquiries**: Manage and respond to contact inquiries directly from the admin panel.
 
+---
+
+## Technology Stack
+
+- **Frontend**: React 18, Vite, Tailwind CSS, Lucide React icons
+- **Backend**: Node.js, Express 5, Express-Session, Multer (file uploads)
+- **Currency & Localization**: Ethiopian Birr (ETB) formatting with local payment instructions
+
+---
+
+## Getting Started
+
+### 1. Install Dependencies
 ```bash
-cd /path/to/your/webserver
+npm install
 ```
 
-### 2. Create the database
-
+### 2. Run the Development Server
 ```bash
-mysql -u root -p < database.sql
+npm run dev
 ```
+The server will start on `http://localhost:3000`.
 
-### 3. Configure the application
-
-Edit `includes/config.php` and update the database credentials:
-
-```php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'pc_store');
-define('SITE_URL', 'http://localhost:8000');
-```
-
-### 4. Start the development server
-
+### 3. Build for Production
 ```bash
-php -S localhost:8000
+npm run build
+npm start
 ```
 
-### 5. Open in browser
+---
 
-Navigate to `http://localhost:8000`
+## Default Credentials
 
-## Default Admin Login
+### Store Administrator
+- **Username**: `admin`
+- **Password**: `admin123`
 
-- **Username:** `admin`
-- **Email:** `admin@pcstore.com`
-- **Password:** `password`
-
-## Project Structure
-
-```
-pc-store/
-├── admin/                  # Admin panel pages
-│   ├── sidebar.php         # Admin navigation sidebar
-│   ├── dashboard.php       # Admin dashboard with stats
-│   ├── products.php        # Product management
-│   ├── add-product.php     # Add new product
-│   ├── edit-product.php    # Edit product
-│   ├── orders.php          # Order management
-│   ├── users.php           # User management
-│   ├── categories.php      # Category management
-│   └── messages.php        # Contact messages
-├── css/
-│   └── style.css           # Main stylesheet
-├── js/
-│   └── main.js             # Main JavaScript
-├── includes/
-│   ├── config.php          # Configuration
-│   ├── db.php              # Database connection
-│   ├── functions.php       # Helper functions
-│   ├── header.php          # HTML header/nav
-│   └── footer.php          # HTML footer
-├── uploads/                # Product image uploads
-├── index.php               # Home page
-├── products.php            # Products listing
-├── product.php             # Product detail
-├── cart.php                # Shopping cart
-├── checkout.php            # Checkout page
-├── contact.php             # Contact page
-├── login.php               # Login page
-├── register.php            # Registration page
-├── profile.php             # User profile
-├── orders.php              # User order history
-├── logout.php              # Logout handler
-├── database.sql            # Database schema
-└── README.md               # This file
-```
-
-## Technologies Used
-
-- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
-- **Backend:** PHP 7.4+
-- **Database:** MySQL
-- **Icons:** Font Awesome 6
-- **Design:** Responsive, mobile-friendly CSS Grid/Flexbox layout
+### Demo Customer
+- **Username**: `customer`
+- **Password**: `customer123`
